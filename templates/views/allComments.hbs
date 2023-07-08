@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Post Comments</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fdeeee;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #feb694;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #138c05;
+      text-align: center;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 20px;
+      padding: 10px;
+      background-color: #fdefef;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    strong {
+      font-weight: bold;
+    }
+
+    small {
+      color: #999;
+    }
+
+    a {
+      color: #337ab7;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Post Comments</h1>
+    <ul>
+      {{#each comments}}
+        <li>
+          <strong><a href="/users/{{owner_id}}">{{owner_name}}</a></strong>: {{text}}
+          <br>
+          <small>{{createdAt}}</small>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+</body>
+</html>

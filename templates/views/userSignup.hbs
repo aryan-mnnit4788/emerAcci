@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign Up</title>
+  <link rel="stylesheet" type="text/css" href="/css/userSignup.css">
+</head>
+<body>
+
+
+
+  <div class="container">
+    <h2>Sign Up</h2>
+
+
+    <form id="signup-form" method="post">
+      <div class="form-group">
+        <label for="firstName">FirstName:</label>
+        <input type="text" id="firstName" name="firstName" required>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Lastname:</label>
+        <input type="text" id="lastName" name="lastName" required>
+      </div>
+
+
+
+<div class="form-group">
+        <label for="bloodGroup">bloodGroup:</label>
+        <input type="text" id="bloodGroup" name="bloodGroup" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      
+      <button type="submit" id="submit" name="submit">Sign Up</button>
+    </form>
+  </div>
+<a href="/hospitals/signup" style="text-decoration: none; text-align: center; display: block;">Signup as Hospital</a>
+<a href="/users/login" style="text-decoration: none; text-align: center; display: block;">Already have an Acccount?</a>
+  <script src="/js/userSignup.js"></script>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Posts</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+      <style>
+   body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #1877f2;
+}
+
+.post-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.post {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+    padding: 16px;
+    border: 1px solid #ff994b;
+    border-radius: 8px;
+    background-color: #f8e3e3;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post-owner {
+    font-size: 24px;
+    color: #f7931e;
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.post-content {
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.post-image {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 200px;
+    gap: 10px;
+}
+
+.post-image a {
+    display: inline-block;
+    width: calc(33.33% - 5px);
+    height: calc(50% - 5px);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.post-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.comment-box {
+    display: none;
+    margin-top: 20px;
+     color: #f1e4e4;
+}
+
+.comment-box textarea {
+    width: 100%;
+    height: 80px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+        .comment-button {
+            margin-top: 10px;
+            padding: 8px 16px;
+            background-color: #f8e3e3;
+            color: #59dcf6;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .comment-button i {
+            margin-right: 5px;
+        }
+
+       .comment-button i.fa-comment {
+            font-size: 30px; /* Adjust the font size as desired */
+        }
+
+.comment-box button {
+    margin-top: 5px;
+    padding: 8px 16px;
+    background-color: #62ec65;
+    color: #020202;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.view-all-comments {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.view-all-comments a {
+    color: #1877f2;
+    text-decoration: none;
+}
+
+
+    </style>
+</head>
+<body>
+    <h1>Advertisements</h1>
+
+    <div class="post-container">
+        {{#each posts}}
+        <div class="post" data-post-id="{{_id}}">
+            <a href="/hospitals/{{owner}}" class="post-owner">{{ownerName}}</a>
+            <p class="post-content">{{content}}</p>
+            <div class="post-image">
+                {{#each imgurls}}
+                <a href="{{url}}" target="_blank">
+                    <img src="{{url}}">
+                </a>
+                {{/each}}
+            </div>
+            <br>
+           <button class="comment-button">
+                <i class="fas fa-comment"></i>
+                
+            </button>
+            <div class="comment-box">
+                <textarea placeholder="Write a comment"></textarea>
+                <button class="submit-comment-button">Submit</button>
+           
+            </div>
+
+ <div class="view-all-comments">
+                <a href="/post/allComments/{{_id}}">View All Comments</a>
+            </div>
+            <br>
+           <button onclick="deletePost('{{_id}}')" class="reject">Delete</button>
+           
+
+        </div>
+
+        {{/each}}
+    </div>
+
+    <script>
+
+// delete a particular adverisement
+
+ async function deletePost(pId) {
+      try {
+         const url=`/post/hospitals/advertise/${pId}`;
+      
+        const response = await fetch(url, { method: 'POST' });
+        if (response.ok) {
+            alert('Post deleted successfully')
+          console.log('Delete request sent successfully');
+          window.location.href = '/post/hospitals/allAdvertisements'; 
+        } else {
+          throw new Error('Failed to send delete request');
+        }
+      } catch (error) {
+        alert('Failed')
+        console.error('Error sending accept request:', error);
+      }
+    }
+ 
+
+
+        // Get all comment buttons
+        const commentButtons = document.querySelectorAll('.comment-button');
+
+        // Add click event listener to each comment button
+        commentButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Toggle display of the comment box
+                const commentBox = button.nextElementSibling;
+                commentBox.style.display = commentBox.style.display === 'none' ? 'block' : 'none';
+            });
+        });
+
+        // Get all submit comment buttons
+        const submitCommentButtons = document.querySelectorAll('.submit-comment-button');
+
+        // Add click event listener to each submit comment button
+        submitCommentButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Get the comment textarea and its value
+                const commentTextArea = button.previousElementSibling;
+                const comment = commentTextArea.value;
+
+                // Get the post ID (_id)
+               let postId = button.parentElement.dataset.postId;
+
+// Check if postId is undefined or empty
+if (!postId) {
+    // If the postId is not found, traverse up the DOM to find the post element
+    let postElement = button.parentElement;
+    while (postElement && !postId) {
+        postId = postElement.dataset.postId;
+        postElement = postElement.parentElement;
+    }
+}
+
+                // Prepare the data to be sent in the AJAX request
+                const data = {
+                    text: comment,
+                    postId: postId
+                };
+
+                // Perform the AJAX request
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '/post/hospitals/comment');
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        // Comment posted successfully
+                        alert('Comment posted!');
+                    } else {
+                        // Error occurred while posting the comment
+                        alert('Error posting comment');
+                    }
+                };
+                xhr.send(JSON.stringify(data));
+
+                // Clear the comment textarea
+                commentTextArea.value = '';
+
+                // Hide the comment box
+                const commentBox = button.parentElement;
+                commentBox.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

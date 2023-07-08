@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Homepage</title>
+  <style>
+    /* CSS styles */
+
+    /* Global styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+    }
+
+    /* Header styles */
+    header {
+      background-color: #333;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #fff;
+      margin: 0;
+    }
+
+    /* Sidebar styles */
+    .sidebar {
+      width: 200px;
+      height: 100vh;
+      background-color: #333;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 20px;
+      position: fixed;
+      top: 0;
+      left: -200px; /* Initially hidden */
+      transition: left 0.3s ease-in-out;
+    }
+
+    .sidebar.open {
+      left: 0; /* Visible when open */
+    }
+
+    .sidebar a {
+      color: #fff;
+      text-decoration: none;
+      margin-bottom: 10px;
+      padding: 10px;
+    }
+
+    .sidebar a:hover {
+      background-color: #555;
+    }
+
+    /* Button styles */
+    .menu-icon {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    /* Content styles */
+    .content {
+      margin-left: 240px; /* Adjusted for the sidebar width */
+      padding: 20px;
+    }
+.buttons {
+      margin-top: 50px;
+      text-align: center;
+    }
+    
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      margin: 10px;
+    }
+    
+    .button:hover {
+      background-color: #45a049;
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome</h1>
+  </header>
+  
+  <!-- Menu Icon -->
+  <div class="menu-icon" onclick="toggleSidebar()">
+    <img src="/images/download.png" alt="Menu Icon" width="30">
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <a href="/hospitals/messages">Inbox</a>
+    <a href="/hospitals/savedMessages">Saved Messages</a>
+    <a href="/hospitals/me">Your Profile</a>
+    <a href="/hospitals/update/me">Update Profile</a>
+    <a href="/hospitals/update/bloodBank">Update Blood Bank</a>
+    <a href="#" onclick="logout()">Logout</a>
+    <a href="#" onclick="logoutAll()">Logout All</a>
+     <a href="#" onclick="del()">Delete Account</a>
+    
+   
+  </div>
+  
+  <div class="content">
+    <h2>About Me</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae tristique felis, vitae volutpat velit. Vestibulum eu lobortis ante. Phasellus facilisis tortor at arcu aliquet, ac suscipit sapien bibendum.</p>
+    <p>Phasellus eget eros non ligula ultrices pharetra. Nunc aliquet libero sed consequat porttitor. Nullam non sapien interdum, bibendum lacus non, condimentum leo.</p>
+  </div>
+
+
+</div>
+  
+  <div class="buttons">
+    <a href="/post/hospitals/advertise" class="button">Advertise</a>
+     <a href="/post/hospitals/allAdvertisements" class="button">My Advertisements</a>
+    
+  </div>
+
+
+  <script>
+
+
+function del(){
+      fetch('/hospitals/me', {
+        method: 'DELETE',
+      })
+      .then(response => {
+        // Handle response
+        // Redirect or perform other actions as needed
+        alert('Successfully deleted your account')
+        window.location.href = '/hospitals/signup'; // Redirect to messages route after logout
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+
+
+
+    function toggleSidebar() {
+      var sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('open');
+    }
+
+    function logout() {
+      fetch('/hospitals/logout', {
+        method: 'POST',
+      })
+      .then(response => {
+        // Handle response
+        // Redirect or perform other actions as needed
+        alert('Successfully logged out')
+        window.location.href = '/hospitals/login'; // Redirect to messages route after logout
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+
+
+function logoutAll() {
+      fetch('/hospitals/logoutAll', {
+        method: 'POST',
+      })
+      .then(response => {
+        // Handle response
+        // Redirect or perform other actions as needed
+        alert('Successfully logged out from all devices')
+        window.location.href = '/hospitals/login'; // Redirect to messages route after logout
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+
+
+
+
+
+    </script>
+</body>
+</html>

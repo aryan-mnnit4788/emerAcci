@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Information</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    
+    h1 {
+      color: #333;
+    }
+    
+    .user-info {
+      background-color: #f2f2f2;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .user-info p {
+      margin: 5px 0;
+    }
+    
+    .user-info button {
+      background-color: #9daf4c;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+    
+    .user-info button.accept {
+      background-color: #4CAF50;
+    }
+    
+    .user-info button.reject {
+      background-color: #f44336;
+    }
+    
+    .user-info button.whatsapp {
+      background-color: #25D366;
+    }
+    
+    .user-info .whatsapp-icon img {
+      height: 45px;
+      width: 45px;
+      margin-left: 5px;
+    }
+    
+    .user-info .whatsapp-icon {
+      display: flex;
+      align-items: center;
+    }
+    
+    .user-info button:hover {
+      background-color: #45a049;
+    }
+    
+    hr {
+      border: none;
+      border-top: 1px solid #ddd;
+      margin: 10px 0;
+    }
+  </style>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbsY0Gb6FbNUuOkALy8aoSGhEjNdFzLiY"></script>
+  <script>
+    async function openMap(latitude, longitude) {
+      const mapUrl = `https://www.google.com/maps/dir/Current+Location/${latitude},${longitude}`;
+      const mapWindow = await window.open(mapUrl);
+    }
+    
+    async function acceptRequest(messageId) {
+      try {
+        const url = `/users/donationMessages/accept/${messageId}`;
+        const response = await fetch(url, { method: 'POST' });
+        if (response.ok) {
+          console.log('Accept request sent successfully');
+          window.location.href = '/users/donationMessages';
+        } else {
+          throw new Error('Failed to send accept request');
+        }
+      } catch (error) {
+        console.error('Error sending accept request:', error);
+      }
+    }
+    
+    async function rejectRequest(messageId) {
+      try {
+        const url =  `/users/donationMessages/ignore/${messageId}`;
+        const response = await fetch(url, { method: 'POST' });
+        if (response.ok) {
+          console.log('Reject request sent successfully');
+          window.location.href = '/users/donationMessages';
+        } else {
+          throw new Error('Failed to send reject request');
+        }
+      } catch (error) {
+        console.error('Error sending accept request:', error);
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1>Inbox</h1>
+  {{#each allMessages}}
+    <div class="user-info">
+      <p>Name: <a href="/users/{{ownerId}}"> {{name}}</a></p>
+      <p>Phone Number: {{phoneNumber}}</p>
+      <p>Blood Group: {{bloodGroup}}</p>
+      <p>Address: {{address}}</p>
+      
+      <p>Message: {{message}}</p>
+      <p>Message Id: {{messageId}}</p>
+      <button onclick="openMap({{latitude}}, {{longitude}})">Locate</button>
+      <button onclick="acceptRequest('{{messageId}}')" class="accept">Accept</button>
+      <button onclick="rejectRequest('{{messageId}}')" class="reject">Reject</button>
+      <div class="whatsapp-icon">
+        <a href="https://api.whatsapp.com/send?phone={{phoneNumber}}&text=Hello%20{{name}},%20I%20saw%20your%20message%20and%20I%20would%20like%20to%20help.%20Please%20provide%20more%20details.%20Thank%20you!"
+           target="_blank" class="whatsapp">
+          <img src="/images/whatsapp-icon.webp" alt="WhatsApp Icon">
+        </a>
+      </div>
+      <hr>
+    </div>
+  {{/each}}
+</body>
+</html>

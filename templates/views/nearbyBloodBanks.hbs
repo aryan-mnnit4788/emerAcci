@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Information</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    
+    h1 {
+      color: #333;
+    }
+    
+    .user-info {
+      background-color: #f2f2f2;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .user-info p {
+      margin: 5px 0;
+    }
+    
+    .user-info button {
+      background-color: #8dec1a;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+    
+   
+    
+    .user-info button:hover {
+      background-color: #45a049;
+    }
+    
+    hr {
+      border: none;
+      border-top: 1px solid #ddd;
+      margin: 10px 0;
+    }
+  </style>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbsY0Gb6FbNUuOkALy8aoSGhEjNdFzLiY"></script>
+  <script>
+    async function openMap(latitude, longitude) {
+       const mapUrl = `https://www.google.com/maps/dir/Current+Location/${latitude},${longitude}`;
+        const mapWindow = await window.open(mapUrl);
+    }
+  </script>
+</head>
+<body>
+  <h1>Nearby Blood Banks</h1>
+  {{#each allHospitals}}
+    <div class="user-info">
+      <p>Hospital Name: <a href="/hospitals/{{hospitalId}}"> {{hospitalName}}</a></p>
+      
+      <button onclick="openMap({{latitude}}, {{longitude}})">Locate</button>
+      
+     
+      <hr>
+    </div>
+  {{/each}}
+</body>
+</html>

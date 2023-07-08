@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blood Bank Info Update</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f7f7f7;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .available {
+            color: green;
+        }
+
+        .unavailable {
+            color: red;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Blood Bank Information</h1>
+
+    <form id="bloodBankForm">
+        <table>
+            <tr>
+                <th>Blood Type</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>O+</td>
+                <td>
+                    <input type="radio" name="Op" value="Available" id="oPlusAvailable">
+                    <label for="oPlusAvailable">Available</label>
+                    <input type="radio" name="Op" value="Unavailable" id="oPlusUnavailable">
+                    <label for="oPlusUnavailable">Unavailable</label>
+                </td>
+            </tr>
+            <tr>
+                <td>O-</td>
+                <td>
+                    <input type="radio" name="On" value="Available" id="oMinusAvailable">
+                    <label for="oMinusAvailable">Available</label>
+                    <input type="radio" name="On" value="Unavailable" id="oMinusUnavailable">
+                    <label for="oMinusUnavailable">Unavailable</label>
+                </td>
+            </tr>
+            <tr>
+                <td>A+</td>
+                <td>
+                    <input type="radio" name="Ap" value="Available" id="aPlusAvailable">
+                    <label for="aPlusAvailable">Available</label>
+                    <input type="radio" name="Ap" value="Unavailable" id="aPlusUnavailable">
+                    <label for="aPlusUnavailable">Unavailable</label>
+                </td>
+            </tr>
+            <tr>
+                <td>A-</td>
+                <td>
+                    <input type="radio" name="An" value="Available" id="aMinusAvailable">
+                    <label for="aMinusAvailable">Available</label>
+                    <input type="radio" name="An" value="Unavailable" id="aMinusUnavailable">
+                    <label for="aMinusUnavailable">Unavailable</label>
+                </td>
+            </tr>
+            <tr>
+                <td>B+</td>
+                <td>
+                    <input type="radio" name="Bp" value="Available" id="bPlusAvailable">
+                    <label for="bPlusAvailable">Available</label>
+                    <input type="radio" name="Bp" value="Unavailable" id="bPlusUnavailable">
+                    <label for="bPlusUnavailable">Unavailable</label>
+                </td>
+            </tr>
+            <tr>
+                <td>B-</td>
+                <td>
+                    <input type="radio" name="Bn" value="Available" id="bMinusAvailable">
+                    <label for="bMinusAvailable">Available</label>
+                    <input type="radio" name="Bn" value="Unavailable" id="bMinusUnavailable">
+                    <label for="bMinusUnavailable">Unavailable</label>
+                </td>
+            </tr>
+            <tr>
+                <td>AB+</td>
+                <td>
+                    <input type="radio" name="ABp" value="Available" id="abPlusAvailable">
+                    <label for="abPlusAvailable">Available</label>
+                    <input type="radio" name="ABp" value="Unavailable" id="abPlusUnavailable">
+                    <label for="abPlusUnavailable">Unavailable</label>
+                </td>
+            </tr>
+            <tr>
+                <td>AB-</td>
+                <td>
+                    <input type="radio" name="ABn" value="Available" id="abMinusAvailable">
+                    <label for="abMinusAvailable">Available</label>
+                    <input type="radio" name="ABn" value="Unavailable" id="abMinusUnavailable">
+                    <label for="abMinusUnavailable">Unavailable</label>
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="Submit">
+    </form>
+
+    <script src="/js/bloodBank.js">
+        
+       
+    </script>
+</body>
+</html>

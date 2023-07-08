@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>emerAcci - Home</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <style>
+    /* CSS styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    p {
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    .link-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #333;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 18px;
+      margin: 10px;
+    }
+
+    .link-button:hover {
+      background-color: #555;
+    }
+
+    .decorative-line {
+      width: 100%;
+      height: 2px;
+      background-color: #ccc;
+      margin-bottom: 30px;
+    }
+
+    .life-line-icon {
+      font-size: 48px;
+      color: #de2828;
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+    {{> header}}
+  <div class="container">
+    
+    <h1>Welcome to <span style="color: #de2828;">emerAcci</span></h1>
+    <p>A platform for emergency services</p>
+    <div class="decorative-line"></div>
+    
+    <a href="/users/signup" class="link-button">Register as Individual</a>
+    <a href="/hospitals/signup" class="link-button">Register as Hospital</a>
+    <i class="fas fa-heartbeat life-line-icon"></i>
+    
+  </div>
+   {{> footer}}
+</body>
+</html>

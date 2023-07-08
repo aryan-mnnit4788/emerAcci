@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hospital Information</title>
+  <style>
+    /* CSS styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+    }
+
+    header {
+      background-color: #333;
+      padding: 20px;
+      text-align: center;
+      color: #fff;
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .hospital {
+      margin-bottom: 20px;
+    }
+
+    .hospital-name {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .hospital-email {
+      color: #888;
+      margin-bottom: 5px;
+    }
+
+    .hospital-location {
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Hospital Information</h1>
+  </header>
+
+  <div class="container" id="hospitalList">
+    <div class="hospital">
+      <p class="hospital-name">{{hospitalName}}</p>
+     
+      <p class="hospital-location">{{address}}</p>
+       <p class="hospital-email">{{email}}</p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Information</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    
+    h1 {
+      color: #333;
+    }
+    
+    .user-info {
+      background-color: #f2f2f2;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .user-info p {
+      margin: 5px 0;
+    }
+    
+    .user-info button {
+      background-color: #9daf4c;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+    
+    .user-info button.accept {
+      background-color: #4CAF50;
+    }
+    
+    .user-info button.reject {
+      background-color: #f44336;
+    }
+    
+    .user-info button:hover {
+      background-color: #45a049;
+    }
+    
+    hr {
+      border: none;
+      border-top: 1px solid #ddd;
+      margin: 10px 0;
+    }
+  </style>
+ 
+  <script>
+    
+    
+    async function deleteRequest(messageId) {
+      try {
+        const url =  `/users/donationMessage/delete/${messageId}`;
+        const response = await fetch(url, { method: 'POST' });
+        if (response.ok) {
+          console.log('delete request sent successfully');
+          window.location.href = '/users/yourDonationMessages';
+        } else {
+          throw new Error('Failed to send delete request');
+        }
+      } catch (error) {
+        console.error('Error sending accept request:', error);
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1>Blood Sentbox</h1>
+  {{#each allMessages}}
+    <div class="user-info">
+      <p>Name: {{name}}</p>
+      <p>Phone Number: {{phoneNumber}}</p>
+      <p>Blood Group: {{bloodGroup}}</p>
+      <p>Address: {{address}}</p>
+      
+      <p>Message: {{message}}</p>
+       <p>Message Id: {{messageId}}</p>
+       <p>Status: {{status}}</p>
+      
+      <button onclick="deleteRequest('{{messageId}}')" class="reject">Delete</button>
+      <hr>
+    </div>
+  {{/each}}
+</body>
+</html>
