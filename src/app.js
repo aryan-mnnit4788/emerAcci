@@ -45,7 +45,7 @@ app.use(postRouter)
 
 
 
-console.log(process.env.SECRET1)
+
 
 
 

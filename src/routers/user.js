@@ -7,8 +7,9 @@ const Hospital= require('../models/hospital')
 const Message= require('../models/message')
 const Blood=require('../models/blood')
 const jwt= require('jsonwebtoken');
+const {sendConformationEmail}= require('../email/account1')
 const { findById } = require('../models/user');
-const multer= require('multer')
+const multer= require('multer') 
 
 
 ///////////////////////////multer setup/////////////
@@ -39,7 +40,20 @@ fileFilter: multerFilter
 
 });
 
+//////////// accepted by
 
+router.get('/users/acceptedBy/:messageId',auth,async (req,res)=>{
+    const messageId=req.params.messageId;
+    const message= await Blood.findOne({_id:messageId});
+    const arr=message.acceptedBy;
+    
+    res.render('allDonors',{arr});
+
+
+})
+
+
+/////////////
 
 
 
@@ -191,7 +205,7 @@ router.get('/users/update/me',auth,async (req,res)=>{
 
 
 
-///////////////////////////////// get all accepted blood donations request
+///////////////////////////////// get all accepted by itself blood donations request
 
 router.get('/users/savedBloodMessages',auth,async (req,res)=>{
     try{
@@ -304,7 +318,7 @@ router.get('/users/donationMessages',auth,async (req,res)=>{
      if(userBloodGroup=='O-')
      {
                  try{                                         
-         const data= await Blood.find({status: "Not Accepted", 'nearby.places':req.user._id}).sort({_id: -1});
+         const data= await Blood.find({status: "Active", 'nearby.places':req.user._id}).sort({_id: -1});
          let allMessages=[];
          var a;
         
@@ -338,7 +352,7 @@ router.get('/users/donationMessages',auth,async (req,res)=>{
      {
         try{
          const bloodfinder={
-          status: "Not Accepted",
+          status: "Active",
           'nearby.places':req.user._id,
           bloodGroup: { $in: ['AB+', 'A+','B+','O+'] }
          }
@@ -375,7 +389,7 @@ router.get('/users/donationMessages',auth,async (req,res)=>{
      {
         try{
          const bloodfinder={
-          status: "Not Accepted",
+          status: "Active",
           'nearby.places':req.user._id,
           bloodGroup: { $in: ['A+','O-','AB+','AB-'] }
          }
@@ -412,7 +426,7 @@ router.get('/users/donationMessages',auth,async (req,res)=>{
      {
         try{
          const bloodfinder={
-          status: "Not Accepted",
+          status: "Active",
           'nearby.places':req.user._id,
           bloodGroup: { $in: ['A+'] }
          }
@@ -455,7 +469,7 @@ router.get('/users/donationMessages',auth,async (req,res)=>{
      {
         try{
          const bloodfinder={
-          status: "Not Accepted",
+          status: "Active",
           'nearby.places':req.user._id,
           bloodGroup: { $in: ['AB+', 'AB-','B+','B-'] }
          }
@@ -497,7 +511,7 @@ router.get('/users/donationMessages',auth,async (req,res)=>{
      {
         try{
          const bloodfinder={
-          status: "Not Accepted",
+          status: "Active",
           'nearby.places':req.user._id,
           bloodGroup: { $in: ['B+','AB+'] }
          }
@@ -534,7 +548,7 @@ router.get('/users/donationMessages',auth,async (req,res)=>{
      {
         try{
          const bloodfinder={
-          status: "Not Accepted",
+          status: "Active",
           'nearby.places':req.user._id,
           bloodGroup: { $in: ['AB+', 'AB-'] }
          }
@@ -574,7 +588,7 @@ router.get('/users/donationMessages',auth,async (req,res)=>{
      {
         try{
          const bloodfinder={
-          status: "Not Accepted",
+          status: "Active",
           'nearby.places':req.user._id,
           bloodGroup: { $in: ['AB+'] }
          }
@@ -1011,13 +1025,21 @@ message.nearby= message.nearby.filter((p)=>  p.places !== userId.toString())
 router.post('/users/donationMessages/accept/:messageId',auth, async (req,res)=>{
     try{
     const messageId=req.params.messageId
-    const message= await Blood.findOne({_id: messageId});
+    const message= await Blood.findOne({_id: messageId,status:'Active'});
+    if(!message){
+        return res.redirect('/users/donationMessages')
+    }
     const user=req.user
-    message.status= "Accepted By "+req.user.firstName+" "+req.user.lastName;
+    message.populate('owner');
+   // message.status= "Accepted By "+req.user.firstName+" "+req.user.lastName;
+    message.acceptedBy = message.acceptedBy.concat({ id:req.user._id ,name: req.user.firstName+" "+req.user.lastName});
     user.savedMessages= user.savedMessages.concat({id:message._id});
         await user.save();
+    
+    message.nearby=message.nearby.filter((d)=>req.user._id.toString() !== d.places.toString());
     await message.save();
-    console.log(user);
+    await sendConformationEmail(message.owner.email,message.owner.firstName,req.user.firstName,req.user.lastName)
+    console.log(message);
     res.redirect('/users/donationMessages')
     }
     catch(e){
@@ -1072,7 +1094,19 @@ router.post('/users/savedBloodMessages/delete/:messageId',auth,async (req,res)=>
     
         })
     
-
+        router.post('/users/freeze_message/:id',auth,async (req,res)=>{
+            try{
+            const messageId= req.params.id
+            const message= await Blood.findOne({_id:messageId});
+            message.status='Freezed';
+            await message.save();
+            console.log(message)
+            res.redirect('/users/yourDonationMessages');
+            } catch(e){
+                console.log(e)
+                res.status(400).send(e)
+            }
+        })
 
 
 

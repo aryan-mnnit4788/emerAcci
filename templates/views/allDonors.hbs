@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>All Donnerss</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fdeeee;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f0102e;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #051403;
+      text-align: center;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 20px;
+      padding: 10px;
+      background-color: #fdefef;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    strong {
+      font-weight: bold;
+    }
+
+    small {
+      color: #999;
+    }
+
+    a {
+      color: #337ab7;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>All Donors</h1>
+    <ul>
+      {{#each arr}}
+        <li>
+          <strong><a href="/users/{{id}}">{{name}}</a></strong>
+          <br>
+          <small>{{acceptedAt}}</small>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+</body>
+</html>

@@ -45,7 +45,7 @@ const bloodSchema=new mongoose.Schema({
     ],
     status: {
         type: String,
-        default: "Not Accepted"
+        default: "Active"
     },
     siteAddress:{
         required:true,
@@ -62,7 +62,17 @@ const bloodSchema=new mongoose.Schema({
     latitude:{
         required:true,
         type: Number
-    }
+    },
+    acceptedBy:[{
+        id:{
+            type: String
+           
+        },
+        name:{
+            type: String 
+        },
+        acceptedAt: { type: Date, default: Date.now}
+            }]
     
     
     

@@ -39,6 +39,9 @@
     .user-info button.reject {
       background-color: #f44336;
     }
+    .user-info button.freeze {
+      background-color: #c03db7;
+    }
     
     .user-info button:hover {
       background-color: #45a049;
@@ -68,6 +71,22 @@
         console.error('Error sending accept request:', error);
       }
     }
+
+async function freeze(messageId) {
+      try {
+        const url =  `/users/freeze_message/${messageId}`;
+        const response = await fetch(url, { method: 'POST' });
+        if (response.ok) {
+          console.log('freezed successfully');
+          window.location.href = '/users/yourDonationMessages';
+        } else {
+          throw new Error('Failed to send freeze request');
+        }
+      } catch (error) {
+        console.error('Error sending accept request:', error);
+      }
+    }
+
   </script>
 </head>
 <body>
@@ -82,8 +101,11 @@
       <p>Message: {{message}}</p>
        <p>Message Id: {{messageId}}</p>
        <p>Status: {{status}}</p>
+        <p>Accepted By:  <a href="/users/acceptedBy/{{messageId}}">See Donors</a></p>
+
       
       <button onclick="deleteRequest('{{messageId}}')" class="reject">Delete</button>
+       <button onclick="freeze('{{messageId}}')" class="freeze">Freeze</button>
       <hr>
     </div>
   {{/each}}
